@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>CS:GO Skin Unboxing Probabilities</title>
+
+<style>
+body {
+  background-color: linen;
+  font-size: 1em !important;
+  color: #000 !important;
+  font-family: Arial !important;
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  color: maroon;
+  margin-left: 10px;
+}
+
+a:link {
+    display: inline-block;
+    margin: 0 0.2em;
+    padding: 3px;
+    background: #97CAF2;
+    border-radius: 2px;
+    transition: all 0.3s ease-out; 
+    /* Font styles */
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+
+a:hover {
+    background: #53A7EA
+}
+
+a:active {
+    background: #C4E1F8
+}
+
+a:visited {
+    background: #F2BF97
+}
+
+#wrapper, img{
+	width:100%;
+
+}
+
+</style>
+
+</head>
+
+<body>
+<h2 id="CS:GO-Skin-Win-probabilities">CS:GO Skin Unboxing Probabilities</h2>
+<h3>by <a href="https://twitter.com/tfburns">Tom Burns</a></h3>
+<p>YouTuber <a href="https://www.youtube.com/channel/UCmu9PVIZBk-ZCi-Sk2F2utA">3kliksphilip</a> recently posted a video titled <a href="https://www.youtube.com/watch?v=a-FdnfZhguw">"Case Unboxing Millionaire #2"</a>, wherein he showed a single run simulation of him 'unboxing' cases for the first-person-shooter computer game Counter Strike: Global Offensive. These cases are digital items which, when opened, unlock a decorative weapon 'skin'. These skins can be used by players in the game to show off to their friends. Such skins have developed quite a market for themselves and can be bought and sold for hundreds or even thousands of dollars through various online marketplaces.</p>
+<p>3kliksphilip uploaded another video titled <a href="https://www.youtube.com/watch?v=AObvZDfUa3k">Case Unboxing Millionaire #3</a>, where he did a simulated run of unlocking the "eSportsCase 2013" until he opened a knife. My previous analysis showed the expected value to be a loss of $5,720.96. This analysis calculates the information for the <span style="text-decoration: underline;">"Winter Offensive Weapon Case"</span>, as 3kliksphilip has challenged viewers to submit a guess for this case in his latest video.&nbsp;</p>
+<p>It costs $5.20 to open, and can contain skins worth between a few dollars to around $300. 3kliksphilip challenged his viewers to estimate his profit or loss from opening this case up until he unlocked a knife skin, the rarest skin to obtain. I have calculated this expected value to be a <span style="color: #ff0000;">loss of $415.03</span>.</p>
+<p>How did I do this?</p>
+<p>&nbsp;</p>
+<h2 id="Statistics">Method</h2>
+<ol>
+<li>I downloaded historical price data, in the JSON format, available <a href="https://csgotrader.app/prices/">here</a>. I focused on averaged Steam marketplace data from the past 90 days.</li>
+<li>I obtained information on <a href="https://csgostash.com/case/7/Winter-Offensive-Weapon-Case">which items were available</a> from this case.</li>
+<li>I used publicly available information to infer or explicitly state the probabilities of <a href="https://www.skinwallet.com/csgo/best-csgo-cases/#Opening_cases_or_buying_skins">skin drops</a> and <a href="https://totalcsgo.com/skin-conditions">skin conditions</a>.</li>
+<li>Using this information, I calculated the <strong><em>expected value of each case opening</em></strong>.</li>
+</ol>
+<p>For a full, step-by-step walk-through of my methods, please feel welcome to inspect the code <a href="https://github.com/tfburns/CSGO-cases-PL">here</a>.</p>
+<p>&nbsp;</p>
+<p>The&nbsp;<strong><em>expected value of each case opening</em></strong>&nbsp;can be calculated by:</p>
+<p>Calculating the average value of every item, by finding the market balue for every item-condition pair, e.g. an AWP | Redline (Field-Tested) is currently valued around $18.19 on the Steam Marketplace. Then, using the&nbsp;<a href="https://totalcsgo.com/skin-conditions">skin conditions</a>&nbsp;probability distribution, calculate the average value.</p>
+<div id="wrapper">
+<img src="images/cond_cdf.png" alt="" /> <img src="images/cond_pdf.png" alt="" />
+</div>
+<p>Once the average value of every item is calculated, we can find the average value of any colour or rarity of item for a box by assuming all items of a given rarity level for a case are equally likely. So, we just take the average of the averages of those items.</p>
+<p>Then, calculated the avarage value of any opening of the case is as simple as multiplying by the&nbsp;<a href="https://www.skinwallet.com/csgo/best-csgo-cases/#Opening_cases_or_buying_skins">skin drops</a>&nbsp;probability distribution.</p>
+<div id="wrapper">
+<img src="images/colour_cdf.png" alt="" /> <img src="images/colour_pdf.png" alt="" />
+</div>
+<p>In this case, we calculate that the average value of each opening of the&nbsp;"Winter Offensive Weapon Case" is&nbsp;$3.08. Since it costs $5.20 to open, the expected loss per opening is <span style="color: #ff0000;">-$2.12</span>. Given the probability of opening of opening a knife is ~0.25%, we can estimate that it will take ~200 case openings to open a knife (or, ~200 case opening to reach a probability of 0.5 that a knife will be opened).</p>
+<p>Given this, we can expect an average loss of <span style="color: #ff0000;">-$415.03</span> if we open cases until we open a knife.</p>
+</body>
+
+</html>
